@@ -9,8 +9,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all()->toArray();
-        return array_reverse($products);
+        $products = Product::get();
+        return response()->json($products);
     }
 
     public function create()
@@ -19,6 +19,8 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $product = Product::create($request->all());
+        return response()->json($product);
     }
 
     public function show(Product $product)
@@ -35,5 +37,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $product->delete();
+        return response(true);
     }
 }
