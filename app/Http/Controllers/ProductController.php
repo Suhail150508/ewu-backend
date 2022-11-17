@@ -33,6 +33,9 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        // return $request->all();
+        $product = $product->update($request->all());
+        return response($product);
     }
 
     public function destroy(Product $product)
