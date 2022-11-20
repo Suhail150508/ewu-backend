@@ -19,7 +19,20 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $product = Product::create($request->all());
+        // $this->validate($request, [
+        //     'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        // ]);
+
+        $imageName = 'product_' .time() . '.' . $request->image->extension();
+
+        $request->image->move(public_path('images/product'), $imageName);
+
+        $product = Product::create([
+            'name' => $request->name,
+            'detail' => $request->detail,
+            'image' => $imageName,
+        ]);
+
         return response()->json($product);
     }
 
